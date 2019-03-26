@@ -51,7 +51,7 @@ And that's it. Now you can go to localhost and see your dockerized Rails applica
 
 ## Contributing
 
-1. Fork it ( https://github.com/pacuna/dckerize/fork )
+1. Fork it ( https://github.com/ironwill1023/dckerize/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
