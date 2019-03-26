@@ -1,0 +1,35 @@
+version: '3'
+services:
+  <%= @name %>-db:
+    image: postgres:11.1
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_USER=<%= @name %>
+      - POSTGRES_DB=<%= @name %>_development
+    volumes:
+      - data-volume:/var/lib/postgresql
+  <%= @name %>-migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile.development
+    depends_on:
+      - <%= @name %>-db
+    environment:
+      - PASSENGER_APP_ENV=development
+    command: ["./wait-for-postgres.sh", "<%= @name %>-db", "bin/rails", "db:migrate"]
+  <%= @name %>:
+    build:
+      context: .
+      dockerfile: Dockerfile.development
+    depends_on:
+      - <%= @name %>-db
+      - <%= @name %>-migrate
+    ports:
+      - "80:80"
+    environment:
+      - PASSENGER_APP_ENV=development
+      - RAILS_LOG_TO_STDOUT=true
+    volumes:
+      - .:/home/app/webapp
+volumes:
+  data-volume:
